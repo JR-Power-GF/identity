@@ -1,0 +1,7 @@
+/**
+ * 样式统一入口
+ * 按顺序引入：变量 → Reset → 全局工具类
+ */
+@import './variables.css';
+@import './reset.css';
+@import './global.css';
