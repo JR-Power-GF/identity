@@ -31,7 +31,7 @@ npm run preview          # 预览生产构建产物
 
 ### 技术栈
 
-Vue3 (Composition API + `<script setup>`) · Vite 6 · TypeScript 5 · Vue Router 4 · Pinia 3 · Axios
+Vue3 (Composition API + `<script setup>`) · Vite 6 · TypeScript 5 · Vue Router 4 · Pinia 3 · Axios · Element Plus · ECharts
 
 ### 目录结构
 
@@ -51,14 +51,31 @@ src/
 └── views/        # 页面视图（每个页面一个文件夹，含 index.vue）
 ```
 
+### UI 组件库 & 图表
+
+- **Element Plus** — 全局注册，直接使用 `el-*` 组件
+- **@element-plus/icons-vue** — 图标库
+- **ECharts** — 通过 `src/composables/useECharts.ts` 封装使用
+
 ### 关键约定
 
 - **路径别名**: `@/` 映射到 `src/`，在 tsconfig 和 vite.config 中已同步配置
 - **Axios 封装**: `src/utils/http.ts` 导出 `http` 单例，包含 Token 自动注入、401 跳转、统一错误提示。API 模块在 `src/api/` 下按业务拆分
 - **Store 风格**: 统一使用 Setup Store（`defineStore('name', () => { ... })`），不用 Options Store
-- **样式体系**: 全局 CSS 变量定义在 `variables.css`，组件使用 scoped `<style>` + CSS 变量
+- **样式体系**: 全局 CSS 变量定义在 `variables.css`，组件使用 scoped `<style>` + CSS 变量。禁止使用 Tailwind CSS
 - **路由懒加载**: 使用 `loadView()` 辅助函数，视图文件约定为 `views/<page>/index.vue`
 - **环境变量**: 通过 `import.meta.env.VITE_*` 访问，类型声明在 `env.d.ts`
+
+### Figma 设计稿转页面规范
+
+当通过 Figma MCP 获取设计稿后，必须按以下规范输出代码：
+
+- **禁止输出 React / JSX 代码**，所有页面必须使用 Vue3 + `<script setup lang="ts">`
+- **禁止使用 Tailwind CSS**，样式使用 Element Plus 组件 + scoped `<style>` + CSS 变量
+- **组件选择**: 优先使用 Element Plus 组件（`el-button`、`el-table`、`el-form` 等），避免手写已有组件
+- **页面文件**: 放在 `src/views/<page>/index.vue`，如需子组件放同级目录
+- **API 调用**: 数据请求放 `src/api/` 模块，页面通过 composable 调用
+- **设计令牌**: 颜色、间距、字体等统一使用 `variables.css` 中的 CSS 变量，不要硬编码
 
 ### 环境切换
 
